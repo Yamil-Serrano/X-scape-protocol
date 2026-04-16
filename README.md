@@ -5,6 +5,7 @@
 at the **University of Puerto Rico, Mayagüez**.
 
 You control **Nibsy**, a lab-created creature attempting to escape a hostile underground facility.
+> *Curious about the story? [Click here to read the story](LORE.md)*
 
 ## Technical Overview
 
