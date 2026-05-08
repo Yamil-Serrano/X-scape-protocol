@@ -76,8 +76,16 @@ try_down:
   CMP #$01
   BEQ down_ok
   JMP skip_movement
+
+;down_ok:
+;  INC enemy_y
+;  JMP skip_movement
+
 down_ok:
-  INC enemy_y
+  LDA enemy_y
+  CLC
+  ADC #$02
+  STA enemy_y
   JMP skip_movement
 
 try_right:
@@ -85,8 +93,16 @@ try_right:
   CMP #$01
   BEQ right_ok
   JMP skip_movement
+
+;right_ok:
+;  INC enemy_x
+;  JMP skip_movement
+
 right_ok:
-  INC enemy_x
+  LDA enemy_x
+  CLC
+  ADC #$02
+  STA enemy_x
   JMP skip_movement
 
 try_up:
@@ -94,8 +110,16 @@ try_up:
   CMP #$01
   BEQ up_ok
   JMP skip_movement
+
+;up_ok:
+;  DEC enemy_y
+;  JMP skip_movement
+
 up_ok:
-  DEC enemy_y
+  LDA enemy_y
+  SEC
+  SBC #$02
+  STA enemy_y
   JMP skip_movement
 
 try_left:
@@ -103,8 +127,15 @@ try_left:
   CMP #$01
   BEQ left_ok
   JMP skip_movement
+
+;left_ok:
+;  DEC enemy_x
+
 left_ok:
-  DEC enemy_x
+  LDA enemy_x
+  SEC
+  SBC #$02
+  STA enemy_x
 
 skip_movement:
   ; Ping-pong animation
@@ -486,7 +517,7 @@ dir_to_bit:
   STA mt_row
   LDA enemy_x
   CLC
-  ADC #1
+  ADC #2
   LSR A
   LSR A
   LSR A
@@ -537,7 +568,7 @@ down_blocked2:
   STA mt_col
   LDA enemy_y
   CLC
-  ADC #1
+  ADC #2
   STA row_pixel
   LSR A
   LSR A
@@ -589,7 +620,7 @@ right_blocked2:
   STA mt_row
   LDA enemy_x
   CLC
-  ADC #1
+  ADC #2
   LSR A
   LSR A
   LSR A
@@ -640,7 +671,7 @@ up_blocked2:
   STA mt_col
   LDA enemy_y
   CLC
-  ADC #1
+  ADC #2
   STA row_pixel
   LSR A
   LSR A

@@ -116,7 +116,7 @@ try_down:
   STA mt_row
   LDA player_x
   CLC
-  ADC #1
+  ADC #2 ; Check 2 pixels ahead for faster movement
   LSR A
   LSR A
   LSR A
@@ -145,8 +145,18 @@ down_pt2:
   JSR is_solid
   BEQ down_ok
   JMP skip_movement
+
+; 1 pixle per frame movement (original)  
+;down_ok:
+;  INC player_y
+;  JMP skip_movement
+
+; 2 pixels per frame so the movement will be faster
 down_ok:
-  INC player_y
+  LDA player_y
+  CLC
+  ADC #$02
+  STA player_y
   JMP skip_movement
 
 try_right:
@@ -161,7 +171,7 @@ try_right:
   STA mt_col
   LDA player_y
   CLC
-  ADC #1
+  ADC #2 ; Check 2 pixels ahead for faster movement
   STA row_pixel
   LSR A
   LSR A
@@ -191,8 +201,16 @@ right_pt2:
   JSR is_solid
   BEQ right_ok
   JMP skip_movement
+
+;right_ok:
+;  INC player_x
+;  JMP skip_movement
+
 right_ok:
-  INC player_x
+  LDA player_x
+  CLC
+  ADC #$02
+  STA player_x
   JMP skip_movement
 
 try_up:
@@ -207,7 +225,7 @@ try_up:
   STA mt_row
   LDA player_x
   CLC
-  ADC #1
+  ADC #2 ; Check 2 pixels ahead for faster movement
   LSR A
   LSR A
   LSR A
@@ -236,8 +254,16 @@ up_pt2:
   JSR is_solid
   BEQ up_ok
   JMP skip_movement
+
+;up_ok:
+;  DEC player_y
+;  JMP skip_movement
+
 up_ok:
-  DEC player_y
+  LDA player_y
+  SEC
+  SBC #$02
+  STA player_y
   JMP skip_movement
 
 try_left:
@@ -252,7 +278,7 @@ try_left:
   STA mt_col
   LDA player_y
   CLC
-  ADC #1
+  ADC #2 ; Check 2 pixels ahead for faster movement
   STA row_pixel
   LSR A
   LSR A
@@ -282,8 +308,15 @@ left_pt2:
   JSR is_solid
   BEQ left_ok
   JMP skip_movement
+
+;left_ok:
+;  DEC player_x
+
 left_ok:
-  DEC player_x
+  LDA player_x
+  SEC
+  SBC #$02
+  STA player_x
 
 skip_movement:
 
